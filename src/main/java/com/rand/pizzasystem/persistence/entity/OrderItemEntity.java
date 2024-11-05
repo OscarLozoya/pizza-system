@@ -1,5 +1,6 @@
 package com.rand.pizzasystem.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class OrderItemEntity {
 
     @ManyToOne
     @JoinColumn(name ="idOrder", referencedColumnName = "idOrder", insertable = false, updatable = false)
+    @JsonIgnore
     private OrderEntity order;
     //Exisitira el error que aqui debe de ir id_pizza ? o con los nombres de las clases estara bien ?
     @OneToOne
