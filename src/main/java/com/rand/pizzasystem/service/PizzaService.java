@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class PizzaService {
@@ -21,7 +23,7 @@ public class PizzaService {
     }
 
     public List<PizzaEntity> getAll(){
-       return pizzaRepository.findAll();
+      return pizzaRepository.findAllByAvailable(true);
     }
 
     public PizzaEntity gatPizza(int pizzaId){
@@ -33,7 +35,13 @@ public class PizzaService {
     }
 
     public void deletePizza(int pizzaId){
-        pizzaRepository.deleteById(pizzaId);
+        //pizzaRepository.deleteById(pizzaId);
+        PizzaEntity pizza = pizzaRepository.findById(pizzaId).orElse(null);
+        if(Objects.nonNull(pizza)){
+            pizza.setAvailable(false);
+            pizzaRepository.save(pizza);
+        }
+
     }
 
     public boolean exist(int pizzaId){
